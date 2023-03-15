@@ -11,6 +11,7 @@ if exists('loaded_workspace')
     finish
 endif
 let loaded_workspace = 1
+let s:silent = v:true
 
 if v:version < 700
     finish
@@ -18,7 +19,6 @@ endif
 
 if ! has_key(s:, 'ws')
     let s:ws = {}
-    let s:silent = v:false
 end
 
 " Open the workspace
@@ -239,7 +239,7 @@ func! WS_B_Remove(...)
     endif
     let tab = tabpagenr()
     let removed = v:true
-    let s:silent = v:true
+    ilet s:silent = v:true
     try
         for t in WS == 0 ? range(1, tabpagenr('$')) : [WS_Tabnum(WS)]
             if index(tabpagebuflist(t), b.bufnr) > -1
@@ -259,7 +259,7 @@ func! WS_B_Remove(...)
         endfor
     finally
         exe 'tabnext ' .. tab
-        let s:silent = v:false
+        " let s:silent = v:false
     endtry
     return removed
 endfunc
